@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, HeartPulse } from "lucide-react";
 import { useApp } from "../context/AppContext";
 import { scrollToSection } from "../hooks/useScrollTo";
 import nurseImage from "../assets/nurse-hero.png";
@@ -84,27 +84,82 @@ export default function Hero() {
         className="nc-hero-art"
         style={{
           position: "relative",
-          borderRadius: 20,
-          background: "#ECEDE7",
-          border: `1px solid ${t.line}`,
-          boxShadow: t.shadow,
-          overflow: "hidden",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: 380,
+          minHeight: 420,
         }}
       >
-        <img
-          src={nurseImage}
-          alt="Nurse illustration"
+        {/* organic blob backdrop, tinted with the active accent color */}
+        <div
           style={{
-            width: "82%",
-            maxWidth: 280,
-            height: "auto",
-            display: "block",
+            position: "absolute",
+            width: "88%",
+            height: "88%",
+            background: `linear-gradient(160deg, ${t.accent}33, ${t.accent}0d)`,
+            borderRadius: "42% 58% 63% 37% / 45% 40% 60% 55%",
+            filter: "blur(0.5px)",
           }}
         />
+        <div
+          style={{
+            position: "absolute",
+            width: "60%",
+            height: "60%",
+            border: `1.5px dashed ${t.line}`,
+            borderRadius: "50%",
+          }}
+        />
+
+        <img
+          src={nurseImage}
+          alt="Illustration of a nurse in scrubs with a stethoscope"
+          style={{
+            position: "relative",
+            width: "62%",
+            maxWidth: 240,
+            height: "auto",
+            display: "block",
+            filter: "drop-shadow(0 18px 30px rgba(0,0,0,0.25))",
+          }}
+        />
+
+        {/* floating stat badge */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: "8%",
+            insetInlineStart: "6%",
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            background: t.panel,
+            border: `1px solid ${t.line}`,
+            borderRadius: 14,
+            padding: "10px 14px",
+            boxShadow: t.shadow,
+          }}
+          className="nc-floating-badge"
+        >
+          <div
+            style={{
+              width: 30,
+              height: 30,
+              borderRadius: 9,
+              background: `${t.accent}1f`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            <HeartPulse size={15} color={t.accent} strokeWidth={1.8} />
+          </div>
+          <div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: t.text }}>{s.stats[2][0]}</div>
+            <div style={{ fontSize: 10.5, color: t.muted }}>{s.stats[2][1]}</div>
+          </div>
+        </div>
       </div>
     </section>
   );

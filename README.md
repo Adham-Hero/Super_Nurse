@@ -6,26 +6,38 @@ A nursing education guide site built with React + Vite.
 
 ```
 src/
-  main.jsx              entry point
-  App.jsx                assembles all sections
-  index.css               global styles + responsive rules
+  main.jsx                 entry point
+  App.jsx                  assembles all sections (Home → About → Studies → Services → History → Footer)
+  index.css                global styles + responsive rules + card hover effects
   theme.js                 dark/light color tokens (hospital blue)
-  content.js                all English/Arabic copy + data
+  content.js               merges every file in src/data/ into { en, ar }
+  data/
+    locale.js              text direction, font, language-toggle label
+    nav.js                 brand name, nav links, contact email
+    hero.js                hero headline, subtitle, CTA, stats
+    quote.js               pull-quote text
+    about.js               About Nursing section copy
+    studies.js             course groups: name, description, resource links (per course)
+    history.js             nursing history timeline entries
+    services.js            services for students, incl. the GPA Calculator link
+    footer.js              footer credit line — NOT split by language, same in EN/AR
   context/
-    AppContext.jsx          shares theme mode + language across the app
+    AppContext.jsx         shares theme mode + language, persists both to localStorage
   hooks/
-    useScrollTo.js            smooth-scroll helper for nav links
+    useScrollTo.js         smooth-scroll helper for nav links
   components/
-    Nav.jsx                   fixed nav bar, language + theme toggles
-    Hero.jsx                  hero section
-    Quote.jsx                 pull quote
+    Nav.jsx                fixed nav bar, language + theme toggles, active-section highlight
+    Hero.jsx                hero section with the illustration
+    Quote.jsx                pull quote
     About.jsx                 about nursing section
-    Studies.jsx                study & courses (grouped skill chips)
-    History.jsx                 nursing history timeline list
-    Services.jsx                 services for students (grid)
-    ServiceCard.jsx               reusable card used by Services.jsx
-    Footer.jsx                    footer
-
+    Studies.jsx                study & courses (card grid, grouped)
+    CourseCard.jsx               reusable card used by Studies.jsx
+    CourseModal.jsx                opens on click: description + resource links
+    Services.jsx                    services for students (card grid)
+    ServiceCard.jsx                   reusable card used by Services.jsx
+    Footer.jsx                        footer (fixed text, same in both languages)
+  assets/
+    nurse-hero.png                     hero illustration (background removed)
 ```
 
 ## Run locally
@@ -35,8 +47,6 @@ npm install
 npm run dev
 ```
 
-Then open the printed local URL (usually http://localhost:5173).
-
 ## Build for production
 
 ```bash
@@ -44,14 +54,25 @@ npm run build
 npm run preview
 ```
 
-## Adding more services or courses
+## Editing content
 
-Open `src/content.js` and add a new entry to the `services` array (or
-`stackGroups` items) under both the `en` and `ar` objects. `ServiceCard.jsx`
-is fully data-driven, so no other file needs to change.
+Every section's text/data lives in its own file under `src/data/`. Open the
+file for the section you want to change — e.g. add a course in
+`src/data/studies.js`, or a service in `src/data/services.js` — and edit both
+the `en` and `ar` objects. No component code needs to change.
 
-## Switching language / theme
+**Exception:** `src/data/footer.js` is intentionally not split by language —
+the footer credit line stays identical in English and Arabic.
 
-Both are handled by `src/context/AppContext.jsx`. `Nav.jsx` calls
-`toggleLang()` and `toggleMode()`, and every component reads the active
-theme/copy via the `useApp()` hook.
+## Persisted state
+
+Theme mode and language are saved to `localStorage` (`sn_theme_mode`,
+`sn_lang`) by `AppContext.jsx`, so a refresh keeps whatever the visitor last
+selected.
+
+## Replacing the hero illustration
+
+`src/assets/nurse-hero.png` had its background removed and was cropped to the
+figure. If you swap in a new image, a transparent PNG cropped close to the
+subject will look best, since `Hero.jsx` renders it on top of a colored blob
+shape rather than a plain box.

@@ -5,8 +5,8 @@ import Hero from "./components/Hero";
 import Quote from "./components/Quote";
 import About from "./components/About";
 import Studies from "./components/Studies";
-import History from "./components/History";
 import Services from "./components/Services";
+import History from "./components/History";
 import Footer from "./components/Footer";
 
 function Page() {
@@ -29,8 +29,8 @@ function Page() {
       <Quote />
       <About />
       <Studies />
-      <History />
       <Services />
+      <History />
       <Footer />
     </div>
   );

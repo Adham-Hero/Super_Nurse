@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useApp } from "../context/AppContext";
+import CourseCard from "./CourseCard";
 import CourseModal from "./CourseModal";
 
 export default function Studies() {
@@ -9,45 +10,36 @@ export default function Studies() {
   return (
     <section id="studies" style={{ maxWidth: 1180, margin: "0 auto", padding: "70px 24px", borderTop: `1px solid ${t.line}` }}>
       <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, color: t.text }}>{s.studiesTitle}</h2>
-      {s.studiesHint && (
-        <p style={{ fontSize: 13.5, color: t.muted, marginBottom: 32 }}>{s.studiesHint}</p>
-      )}
+      {s.studiesHint && <p style={{ fontSize: 13.5, color: t.muted, marginBottom: 36 }}>{s.studiesHint}</p>}
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 34 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
         {s.stackGroups.map((g) => (
           <div key={g.label}>
             <span
               style={{
-                fontSize: 12,
+                display: "inline-block",
+                fontSize: 11.5,
                 letterSpacing: lang === "en" ? "0.08em" : "normal",
-                color: t.faint,
                 textTransform: lang === "en" ? "uppercase" : "none",
+                color: t.accent,
+                background: `${t.accent}14`,
+                borderRadius: 20,
+                padding: "5px 14px",
+                marginBottom: 16,
+                fontWeight: 700,
               }}
             >
               {g.label}
             </span>
-            <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }} className="nc-grid-3">
               {g.items.map((it) => (
-                <button
+                <CourseCard
                   key={it.name}
+                  icon={it.icon}
+                  name={it.name}
+                  description={it.description}
                   onClick={() => setSelected(it)}
-                  className="nc-iconbtn"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 10,
-                    background: t.panel,
-                    border: `1px solid ${t.line}`,
-                    borderRadius: 10,
-                    padding: "12px 16px",
-                    boxShadow: t.shadow,
-                    color: t.text,
-                    cursor: "pointer",
-                  }}
-                >
-                  <it.icon size={18} color={t.accent} strokeWidth={1.6} />
-                  <span style={{ fontSize: 14 }}>{it.name}</span>
-                </button>
+                />
               ))}
             </div>
           </div>
