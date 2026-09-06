@@ -1,0 +1,26 @@
+export const themes = {
+  dark: {
+    bg: "#0A0E14",
+    panel: "#121924",
+    line: "#212B38",
+    text: "#F3F6FA",
+    muted: "#94A3B8",
+    faint: "#5C6B80",
+    accent: "#3B82F6",
+    ctaText: "#FFFFFF",
+    navBg: "rgba(10,14,20,0.75)",
+    shadow: "none",
+  },
+  light: {
+    bg: "#F7FAFD",
+    panel: "#FFFFFF",
+    line: "#DCE6F0",
+    text: "#101B2D",
+    muted: "#546578",
+    faint: "#8A98A8",
+    accent: "#2563EB",
+    ctaText: "#FFFFFF",
+    navBg: "rgba(247,250,253,0.82)",
+    shadow: "0 1px 2px rgba(16,27,45,0.04), 0 8px 24px rgba(16,27,45,0.06)",
+  },
+};
