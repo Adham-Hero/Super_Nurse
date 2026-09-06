@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useApp } from "../context/AppContext";
+import CourseModal from "./CourseModal";
 
 export default function Studies() {
   const { t, s, lang } = useApp();
+  const [selected, setSelected] = useState(null);
 
   return (
     <section id="studies" style={{ maxWidth: 1180, margin: "0 auto", padding: "70px 24px", borderTop: `1px solid ${t.line}` }}>
-      <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 40, color: t.text }}>{s.studiesTitle}</h2>
+      <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, color: t.text }}>{s.studiesTitle}</h2>
+      {s.studiesHint && (
+        <p style={{ fontSize: 13.5, color: t.muted, marginBottom: 32 }}>{s.studiesHint}</p>
+      )}
 
       <div style={{ display: "flex", flexDirection: "column", gap: 34 }}>
         {s.stackGroups.map((g) => (
@@ -14,7 +19,7 @@ export default function Studies() {
             <span
               style={{
                 fontSize: 12,
-                letterSpacing: "0.08em",
+                letterSpacing: lang === "en" ? "0.08em" : "normal",
                 color: t.faint,
                 textTransform: lang === "en" ? "uppercase" : "none",
               }}
@@ -23,8 +28,10 @@ export default function Studies() {
             </span>
             <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 16 }}>
               {g.items.map((it) => (
-                <div
+                <button
                   key={it.name}
+                  onClick={() => setSelected(it)}
+                  className="nc-iconbtn"
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -34,16 +41,20 @@ export default function Studies() {
                     borderRadius: 10,
                     padding: "12px 16px",
                     boxShadow: t.shadow,
+                    color: t.text,
+                    cursor: "pointer",
                   }}
                 >
                   <it.icon size={18} color={t.accent} strokeWidth={1.6} />
-                  <span style={{ fontSize: 14, color: t.text }}>{it.name}</span>
-                </div>
+                  <span style={{ fontSize: 14 }}>{it.name}</span>
+                </button>
               ))}
             </div>
           </div>
         ))}
       </div>
+
+      <CourseModal course={selected} onClose={() => setSelected(null)} />
     </section>
   );
 }

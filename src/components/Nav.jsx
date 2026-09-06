@@ -21,11 +21,12 @@ export default function Nav() {
 
   return (
     <header
+      dir="ltr"
       style={{
         position: "fixed",
         top: 0,
-        insetInlineStart: 0,
-        insetInlineEnd: 0,
+        left: 0,
+        right: 0,
         zIndex: 100,
         background: scrolled ? t.navBg : "transparent",
         backdropFilter: scrolled ? "blur(12px)" : "none",
@@ -87,6 +88,7 @@ export default function Nav() {
 
       {menuOpen && (
         <div
+          dir="ltr"
           style={{
             padding: "8px 24px 20px",
             display: "flex",

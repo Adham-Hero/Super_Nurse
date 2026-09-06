@@ -1,7 +1,8 @@
 import React from "react";
+import { ArrowUpRight } from "lucide-react";
 import { useApp } from "../context/AppContext";
 
-export default function ServiceCard({ index, icon: Icon, title, tags }) {
+export default function ServiceCard({ index, icon: Icon, title, tags, link, linkLabel }) {
   const { t } = useApp();
 
   return (
@@ -36,7 +37,7 @@ export default function ServiceCard({ index, icon: Icon, title, tags }) {
           <span style={{ fontSize: 13, color: t.faint }}>_{index}.</span>
           <h3 style={{ margin: 0, fontSize: 17, fontWeight: 700, color: t.text }}>{title}</h3>
         </div>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", paddingInlineStart: 26 }}>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", paddingInlineStart: 26, marginBottom: link ? 12 : 0 }}>
           {tags.map((tag) => (
             <span
               key={tag}
@@ -52,6 +53,25 @@ export default function ServiceCard({ index, icon: Icon, title, tags }) {
             </span>
           ))}
         </div>
+
+        {link && (
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              marginInlineStart: 26,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              fontSize: 13,
+              fontWeight: 600,
+              color: t.accent,
+            }}
+          >
+            {linkLabel || "Open"} <ArrowUpRight size={14} />
+          </a>
+        )}
       </div>
     </div>
   );
