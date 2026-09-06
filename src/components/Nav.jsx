@@ -7,12 +7,31 @@ export default function Nav() {
   const { t, s, mode, lang, toggleMode, toggleLang } = useApp();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeId, setActiveId] = useState("home");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const ids = s.navLinks.map((l) => l.id);
+    const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveId(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
+
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [s.navLinks]);
 
   const go = (id) => {
     setMenuOpen(false);
@@ -53,11 +72,38 @@ export default function Nav() {
         </div>
 
         <nav className="nc-desktop-nav" style={{ display: "flex", gap: 26 }}>
-          {s.navLinks.map((l) => (
-            <span key={l.id} className="nc-link" onClick={() => go(l.id)} style={{ fontSize: 13.5, color: t.muted }}>
-              {l.label}
-            </span>
-          ))}
+          {s.navLinks.map((l) => {
+            const isActive = activeId === l.id;
+            return (
+              <span
+                key={l.id}
+                className="nc-link"
+                onClick={() => go(l.id)}
+                style={{
+                  fontSize: 13.5,
+                  color: isActive ? t.accent : t.muted,
+                  fontWeight: isActive ? 700 : 400,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  transition: "color .2s ease",
+                }}
+              >
+                {isActive && (
+                  <span
+                    style={{
+                      width: 5,
+                      height: 5,
+                      borderRadius: "50%",
+                      background: t.accent,
+                      display: "inline-block",
+                    }}
+                  />
+                )}
+                {l.label}
+              </span>
+            );
+          })}
         </nav>
 
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -100,7 +146,11 @@ export default function Nav() {
           }}
         >
           {s.navLinks.map((l) => (
-            <span key={l.id} onClick={() => go(l.id)} style={{ fontSize: 15, color: t.muted, cursor: "pointer" }}>
+            <span
+              key={l.id}
+              onClick={() => go(l.id)}
+              style={{ fontSize: 15, color: activeId === l.id ? t.accent : t.muted, fontWeight: activeId === l.id ? 700 : 400, cursor: "pointer" }}
+            >
               {l.label}
             </span>
           ))}

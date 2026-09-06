@@ -58,6 +58,13 @@ button {
   .nc-about {
     grid-template-columns: 1fr !important;
   }
+  .nc-hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .nc-hero-art {
+    order: -1;
+    min-height: 260px !important;
+  }
   .nc-grid-3 {
     grid-template-columns: 1fr 1fr !important;
   }
