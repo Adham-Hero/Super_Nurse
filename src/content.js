@@ -426,7 +426,7 @@ export const content = {
         icon: Calculator,
         title: "حاسبة المعدل التراكمي (GPA)",
         tags: ["أداة مجانية", "موقع خارجي"],
-        link: "https://www.calculator.net/gpa-calculator.html",
+        link: "https://adham-hero.github.io/Calc_Your_GPA/",
         linkLabel: "افتح الحاسبة",
       },
     ],
